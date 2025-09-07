@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hostel Food Visualizer 🍜</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; background: #f9f9f9; }
+        h1 { color: #ff6600; }
+        img { border-radius: 12px; margin-top: 20px; width: 400px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
+        input { padding: 10px; width: 300px; margin-top: 15px; }
+        button { padding: 10px 20px; background: #ff6600; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #e55d00; }
+    </style>
+</head>
+<body>
+    <h1>🍜 Hostel Food Visualizer</h1>
+    <p>Type what you crave → Get a menu image instantly!</p>
+
+    <input id="foodInput" placeholder="Eg: Masala Dosa, Biryani, Maggi">
+    <button onclick="generateFood()">Visualize</button>
+    <div id="result"></div>
+
+    <script>
+        async function generateFood() {
+            let food = document.getElementById("foodInput").value;
+            if (!food) {
+                alert("Please enter a food item");
+                return;
+            }
+            document.getElementById("result").innerHTML = "<p>Loading...</p>";
+
+            let res = await fetch("/generate", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ food })
+            });
+
+            let data = await res.json();
+            if (data.image_url) {
+                document.getElementById("result").innerHTML =
+                    `<img src="${data.image_url}" alt="food image">`;
+            } else {
+                document.getElementById("result").innerHTML =
+                    `<p>Error: ${data.error || "Something went wrong."}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>
