@@ -23,8 +23,6 @@ python app.py
 ```
 Open [http://127.0.0.1:5000](http://127.0.0.1:5000)
 
-## 🎥 Demo
-(Add your 2-minute YouTube demo link here)
 
 ## ✨ Why It Stands Out
 - Solves a **student-life relatable problem**
